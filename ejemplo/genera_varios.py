@@ -5,6 +5,7 @@ misma página sale como subtotal, dos parkings de 2,65 € del mismo día sin c�
 cafetería con el total tapado por una mancha gris (la etiqueta a mano). Comercios ficticios y tarjeta ****0000.
 Uso: python genera_varios.py
 """
+import math
 import os
 import random
 
@@ -52,14 +53,44 @@ def ticket(lineas, mancha):
     return t
 
 
-def genera():
+def lineas_ticket(lineas, mancha):
+    """Posición de cada línea dentro del ticket (sin girar): texto, caja [x0, y0, x1, y1], base, tamaño y si va tapada."""
+    f, fg = ImageFont.truetype(FUENTE, 30), ImageFont.truetype(FUENTE, 40)
+    out, y = [], 40
+    for i, l in enumerate(lineas):
+        grande = l.startswith('!')
+        fu, txt = (fg if grande else f), l.lstrip('!')
+        if txt:
+            b = fu.getbbox(txt)
+            out.append({'texto': txt, 'caja': [36 + b[0], y + b[1], 36 + b[2], y + b[3]], 'base': y + fu.getmetrics()[0], 'px': fu.size, 'tapada': mancha == i})
+        y += 56 if grande else 42
+    return out
+
+
+def gira_punto(px, py, w, h, giro):
+    """Dónde cae (px, py) de una imagen w×h tras Image.rotate(giro, expand=True) (giro antihorario, en grados)."""
+    a = math.radians(giro)
+    nw = abs(w * math.cos(a)) + abs(h * math.sin(a)); nh = abs(w * math.sin(a)) + abs(h * math.cos(a))
+    dx, dy = px - w / 2, py - h / 2
+    return nw / 2 + dx * math.cos(a) + dy * math.sin(a), nh / 2 - dx * math.sin(a) + dy * math.cos(a)
+
+
+def pinta_hojas():
+    """Las hojas escaneadas (imágenes) y, para cada una, sus líneas de texto con la posición en la hoja."""
     hojas = []
     for n, tickets in enumerate(PAGINAS):
         rnd = random.Random(7 + n)
         hoja = Image.new('RGB', (W, H), (246, 246, 244))
+        lineas_hoja = []
         for (x, y, giro, lineas, mancha) in tickets:
-            t = ticket(lineas, mancha).rotate(giro, resample=Image.BICUBIC, expand=True, fillcolor=(0, 0, 0, 0))
+            t0 = ticket(lineas, mancha)
+            t = t0.rotate(giro, resample=Image.BICUBIC, expand=True, fillcolor=(0, 0, 0, 0))
             hoja.paste(t, (x, y), t)
+            for l in lineas_ticket(lineas, mancha):
+                c = l['caja']
+                esq = [gira_punto(px, py, t0.width, t0.height, giro) for px, py in ((c[0], c[1]), (c[2], c[1]), (c[0], c[3]), (c[2], c[3]))]
+                bx, by = gira_punto(c[0], l['base'], t0.width, t0.height, giro)
+                lineas_hoja.append(dict(l, caja=[x + min(p[0] for p in esq), y + min(p[1] for p in esq), x + max(p[0] for p in esq), y + max(p[1] for p in esq)], base=y + by, x=x + bx))
         # ruido de escáner
         px = hoja.load()
         for _ in range(60000):
@@ -67,7 +98,12 @@ def genera():
             v = rnd.randint(-18, 4)
             r, g, b = px[i, j]
             px[i, j] = (max(0, r + v), max(0, g + v), max(0, b + v))
-        hojas.append(hoja.filter(ImageFilter.GaussianBlur(0.6)))
+        hojas.append((hoja.filter(ImageFilter.GaussianBlur(0.6)), lineas_hoja))
+    return hojas
+
+
+def genera():
+    hojas = [h for h, _ in pinta_hojas()]
     salida = os.path.join(AQUI, 'Tickets varios por pagina.pdf')
     hojas[0].save(salida, 'PDF', resolution=DPI, save_all=True, append_images=hojas[1:], quality=80, title='Tickets varios por pagina (ejemplo inventado)')
     print(salida)

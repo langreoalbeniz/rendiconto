@@ -1,7 +1,7 @@
 /* Service worker de Rendiconto: guarda la app y sus librerías para que funcione sin conexión.
    Solo se registra cuando la app se sirve por https (o localhost); en file:// no se usa. Los datos del usuario no pasan por aquí. */
 'use strict';
-const CACHE = 'rendiconto-v4';
+const CACHE = 'rendiconto-v5';
 const APP = [
   './', 'index.html', 'manifest.webmanifest', 'sw.js',
   'iconos/icono.svg', 'iconos/icono-180.png', 'iconos/icono-192.png', 'iconos/icono-512.png',

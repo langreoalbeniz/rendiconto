@@ -102,6 +102,22 @@
   .estado.ok { color:var(--ok); } .estado.mal { color:var(--mal); } .estado.aviso { color:var(--aviso); }
   .dos { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
   @media (max-width:900px) { .dos { grid-template-columns:1fr; } }
+  /* Casar en el móvil: cada movimiento es una tarjeta (desde 700 px, la tabla) */
+  .tarjetas-casar { display:none; }
+  .tarjeta-mov { background:var(--sup); border:1px solid var(--borde); border-radius:var(--radio); padding:12px; margin:0 0 10px; box-shadow:var(--sombra); }
+  .tarjeta-mov.aviso { border:2px solid var(--aviso); } .tarjeta-mov.mal { border:2px solid var(--mal); }
+  .tarjeta-mov .tm-cab { display:flex; justify-content:space-between; align-items:baseline; gap:8px; font-size:15px; }
+  .tarjeta-mov .tm-cab b:last-child { font-size:17px; white-space:nowrap; }
+  .tarjeta-mov .tm-com { display:block; width:100%; text-align:left; background:none; border:0; color:var(--texto); font:inherit; font-size:15px; padding:6px 0; min-height:48px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; cursor:pointer; }
+  .tarjeta-mov .tm-com.abierto { white-space:normal; }
+  .tarjeta-mov .tm-com code { font-size:15px; color:var(--suave); }
+  .tarjeta-mov .tm-tickets { display:flex; gap:8px; overflow-x:auto; padding:2px 0 6px; -webkit-overflow-scrolling:touch; }
+  .tarjeta-mov .tm-tickets .mini { flex:none; width:72px; height:54px; }
+  .tarjeta-mov .tm-estado { font-size:15px; margin:2px 0 8px; }
+  .tarjeta-mov .tm-cat { display:flex; gap:8px; flex-wrap:wrap; }
+  .tarjeta-mov select, .tarjeta-mov input[type=text] { min-height:48px; font-size:16px; flex:1 1 140px; min-width:0; }
+  @media (max-width:699px) { .tabla-casar { display:none; } .tarjetas-casar { display:block; } }
   .mini { width:64px; height:48px; object-fit:contain; border:1px solid var(--borde); border-radius:6px; background:#fff; cursor:zoom-in; }
   textarea { width:100%; min-height:200px; }
   .pill { display:inline-block; padding:1px 8px; border-radius:10px; font-size:12px; font-weight:700; }
@@ -134,6 +150,10 @@
   .fab[hidden] { display:none; }
   .velo { position:fixed; inset:0; z-index:40; background:rgba(0,0,0,.45); display:flex; align-items:flex-end; justify-content:center; }
   .velo[hidden] { display:none; }
+  .tostada { position:fixed; left:50%; transform:translateX(-50%); bottom:calc(84px + var(--inf-ins)); z-index:50; display:flex; align-items:center; gap:12px;
+    background:var(--texto); color:var(--fondo); border-radius:14px; padding:10px 12px 10px 16px; font-size:15px; box-shadow:var(--sombra); max-width:calc(100% - 32px); }
+  .tostada[hidden] { display:none; }
+  #veloBorrar { z-index:60; } /* por encima de la hoja de detalle (45) */
   .hoja-menu { width:100%; max-width:520px; background:var(--sup); border-radius:20px 20px 0 0; padding:16px 16px calc(16px + var(--inf-ins)); display:grid; gap:10px; }
   .hoja-menu .btn { min-height:56px; font-size:17px; }
   /* hoja de detalle de un ticket */
@@ -327,6 +347,13 @@
       <div id="estadoAlmacen" style="margin:6px 0"></div>
       <button class="btn sec" id="btnLiberar">Quitar archivos de tickets enviados hace más de 90 días</button>
       <div id="msgEspacio"></div>
+    </div>
+    <div class="caja">
+      <b>Ayuda</b>
+      <ul class="pasos-instalar">
+        <li><b>Capturas:</b> en la captura toca <b>Compartir ▸ Guardar en Archivos</b> y elige tu carpeta de tickets, o añádela con <b>+ Ticket ▸ Añadir archivos ▸ Fototeca</b>.</li>
+        <li>En una captura, la fecha del gasto es la que se lee en ella (nunca la hora de arriba de la pantalla ni la del archivo). Si no se lee, casa solo por código o importe.</li>
+      </ul>
     </div>
     <div class="caja">
       <b>Instalar en el iPhone</b>
