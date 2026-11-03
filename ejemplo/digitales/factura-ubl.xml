@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Factura UBL 2.1 mínima. Ejemplo inventado: emisor ficticio, NIF B00000000. -->
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+         xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+         xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+  <cbc:ID>MD-2026-00871</cbc:ID>
+  <cbc:IssueDate>2026-11-05</cbc:IssueDate>
+  <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+  <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+  <cac:AccountingSupplierParty>
+    <cac:Party>
+      <cac:PartyName><cbc:Name>Mensajería Demo</cbc:Name></cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:StreetName>Calle Inventada 3</cbc:StreetName>
+        <cbc:CityName>Madrid</cbc:CityName>
+        <cbc:PostalZone>28000</cbc:PostalZone>
+        <cac:Country><cbc:IdentificationCode>ES</cbc:IdentificationCode></cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyTaxScheme>
+        <cbc:CompanyID>ESB00000000</cbc:CompanyID>
+        <cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme>
+      </cac:PartyTaxScheme>
+      <cac:PartyLegalEntity><cbc:RegistrationName>MENSAJERIA DEMO SL</cbc:RegistrationName></cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:AccountingSupplierParty>
+  <cac:AccountingCustomerParty>
+    <cac:Party>
+      <cac:PartyLegalEntity><cbc:RegistrationName>CLIENTE DE EJEMPLO SL</cbc:RegistrationName></cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:AccountingCustomerParty>
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="EUR">2.15</cbc:TaxAmount>
+  </cac:TaxTotal>
+  <cac:LegalMonetaryTotal>
+    <cbc:LineExtensionAmount currencyID="EUR">10.25</cbc:LineExtensionAmount>
+    <cbc:TaxExclusiveAmount currencyID="EUR">10.25</cbc:TaxExclusiveAmount>
+    <cbc:TaxInclusiveAmount currencyID="EUR">12.40</cbc:TaxInclusiveAmount>
+    <cbc:PayableAmount currencyID="EUR">12.40</cbc:PayableAmount>
+  </cac:LegalMonetaryTotal>
+  <cac:InvoiceLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="C62">1</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">10.25</cbc:LineExtensionAmount>
+    <cac:Item><cbc:Name>Envío urgente 24 h</cbc:Name></cac:Item>
+    <cac:Price><cbc:PriceAmount currencyID="EUR">10.25</cbc:PriceAmount></cac:Price>
+  </cac:InvoiceLine>
+</Invoice>

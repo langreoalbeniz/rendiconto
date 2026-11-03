@@ -1,0 +1,19 @@
+{
+  "name": "Rendiconto",
+  "short_name": "Rendiconto",
+  "description": "Prepara el rendiconto de gastos de la tarjeta: lee el desglose y los tickets, los casa y genera el correo, el PDF y el Excel. Todo en el dispositivo.",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f6f7f9",
+  "theme_color": "#2f55d4",
+  "icons": [
+    { "src": "iconos/icono-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "iconos/icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "iconos/icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "iconos/icono-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "iconos/icono.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

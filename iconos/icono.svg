@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Rendiconto: un ticket con una marca de verificación. Fondo a sangre para que iOS y Android lo recorten a su forma. -->
+  <rect width="512" height="512" fill="#2f55d4"/>
+  <path d="M160 96H352A24 24 0 0 1 376 120V416L346 396L316 416L286 396L256 416L226 396L196 416L166 396L136 416V120A24 24 0 0 1 160 96Z" fill="#ffffff"/>
+  <path d="M176 150H272M176 186H240" stroke="#c9d3f5" stroke-width="18" stroke-linecap="round"/>
+  <path d="M186 268L234 316L326 216" fill="none" stroke="#1b7339" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

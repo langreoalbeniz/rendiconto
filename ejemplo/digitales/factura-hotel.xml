@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Factura electrónica Facturae 3.2.2 mínima. Ejemplo inventado: emisor ficticio, NIF B00000000. -->
+<fe:Facturae xmlns:fe="http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <FileHeader>
+    <SchemaVersion>3.2.2</SchemaVersion>
+    <Modality>I</Modality>
+    <InvoiceIssuerType>EM</InvoiceIssuerType>
+    <Batch>
+      <BatchIdentifier>B00000000HPC2026-0457</BatchIdentifier>
+      <InvoicesCount>1</InvoicesCount>
+      <TotalInvoicesAmount><TotalAmount>68.00</TotalAmount></TotalInvoicesAmount>
+      <TotalOutstandingAmount><TotalAmount>68.00</TotalAmount></TotalOutstandingAmount>
+      <TotalExecutableAmount><TotalAmount>68.00</TotalAmount></TotalExecutableAmount>
+      <InvoiceCurrencyCode>EUR</InvoiceCurrencyCode>
+    </Batch>
+  </FileHeader>
+  <Parties>
+    <SellerParty>
+      <TaxIdentification>
+        <PersonTypeCode>J</PersonTypeCode>
+        <ResidenceTypeCode>R</ResidenceTypeCode>
+        <TaxIdentificationNumber>B00000000</TaxIdentificationNumber>
+      </TaxIdentification>
+      <LegalEntity>
+        <CorporateName>HOTEL PRUEBA CENTRO SL</CorporateName>
+        <TradeName>Hotel Prueba Centro</TradeName>
+        <AddressInSpain>
+          <Address>Calle Inventada 1</Address>
+          <PostCode>33000</PostCode>
+          <Town>Oviedo</Town>
+          <Province>Asturias</Province>
+          <CountryCode>ESP</CountryCode>
+        </AddressInSpain>
+      </LegalEntity>
+    </SellerParty>
+    <BuyerParty>
+      <TaxIdentification>
+        <PersonTypeCode>J</PersonTypeCode>
+        <ResidenceTypeCode>U</ResidenceTypeCode>
+        <TaxIdentificationNumber>B00000000</TaxIdentificationNumber>
+      </TaxIdentification>
+      <LegalEntity>
+        <CorporateName>CLIENTE DE EJEMPLO SL</CorporateName>
+        <AddressInSpain>
+          <Address>Calle Ficticia 2</Address>
+          <PostCode>28000</PostCode>
+          <Town>Madrid</Town>
+          <Province>Madrid</Province>
+          <CountryCode>ESP</CountryCode>
+        </AddressInSpain>
+      </LegalEntity>
+    </BuyerParty>
+  </Parties>
+  <Invoices>
+    <Invoice>
+      <InvoiceHeader>
+        <InvoiceNumber>0457</InvoiceNumber>
+        <InvoiceSeriesCode>HPC2026</InvoiceSeriesCode>
+        <InvoiceDocumentType>FC</InvoiceDocumentType>
+        <InvoiceClass>OO</InvoiceClass>
+      </InvoiceHeader>
+      <InvoiceIssueData>
+        <IssueDate>2026-11-02</IssueDate>
+        <InvoiceCurrencyCode>EUR</InvoiceCurrencyCode>
+        <TaxCurrencyCode>EUR</TaxCurrencyCode>
+        <LanguageName>es</LanguageName>
+      </InvoiceIssueData>
+      <TaxesOutputs>
+        <Tax>
+          <TaxTypeCode>01</TaxTypeCode>
+          <TaxRate>10.00</TaxRate>
+          <TaxableBase><TotalAmount>61.82</TotalAmount></TaxableBase>
+          <TaxAmount><TotalAmount>6.18</TotalAmount></TaxAmount>
+        </Tax>
+      </TaxesOutputs>
+      <InvoiceTotals>
+        <TotalGrossAmount>61.82</TotalGrossAmount>
+        <TotalGeneralDiscounts>0.00</TotalGeneralDiscounts>
+        <TotalGeneralSurcharges>0.00</TotalGeneralSurcharges>
+        <TotalGrossAmountBeforeTaxes>61.82</TotalGrossAmountBeforeTaxes>
+        <TotalTaxOutputs>6.18</TotalTaxOutputs>
+        <TotalTaxesWithheld>0.00</TotalTaxesWithheld>
+        <InvoiceTotal>68.00</InvoiceTotal>
+        <TotalOutstandingAmount>68.00</TotalOutstandingAmount>
+        <TotalExecutableAmount>68.00</TotalExecutableAmount>
+      </InvoiceTotals>
+      <Items>
+        <InvoiceLine>
+          <ItemDescription>1 noche habitación individual</ItemDescription>
+          <Quantity>1</Quantity>
+          <UnitPriceWithoutTax>61.82</UnitPriceWithoutTax>
+          <TotalCost>61.82</TotalCost>
+          <GrossAmount>61.82</GrossAmount>
+          <TaxesOutputs>
+            <Tax>
+              <TaxTypeCode>01</TaxTypeCode>
+              <TaxRate>10.00</TaxRate>
+              <TaxableBase><TotalAmount>61.82</TotalAmount></TaxableBase>
+              <TaxAmount><TotalAmount>6.18</TotalAmount></TaxAmount>
+            </Tax>
+          </TaxesOutputs>
+        </InvoiceLine>
+      </Items>
+    </Invoice>
+  </Invoices>
+</fe:Facturae>
