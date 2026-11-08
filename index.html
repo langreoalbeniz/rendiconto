@@ -60,7 +60,7 @@
   #nav .est .pill { font-size:12px; padding:0 6px; min-width:18px; line-height:18px; }
   main { padding:12px 16px; max-width:1200px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left)); padding-right:max(16px, env(safe-area-inset-right)); }
   section { display:none; } section.activo { display:block; animation:entra .18s ease-out; }
-  #p5 { padding-bottom:84px; } /* que el botón «+ Ticket» no tape la última ficha */
+  #p5, #p7 { padding-bottom:84px; } /* que el botón «+ Ticket» no tape la última ficha */
   @keyframes entra { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
   h2 { font-size:24px; margin:6px 0 12px; letter-spacing:-.01em; }
   h3 { font-size:17px; margin:18px 0 8px; }
@@ -315,6 +315,42 @@
     <div class="barra" style="margin-top:16px"><button class="btn sec" id="btnNuevo">Empezar un rendiconto nuevo</button></div>
   </section>
 
+  <!-- FALTAN (ponerse al día con los tickets que faltan de meses anteriores) -->
+  <section id="p7">
+    <h2>Faltan</h2>
+    <div class="caja">
+      <b>Tickets que faltan de meses anteriores</b>
+      <div class="ayuda">Abre la lista que prepara el PC (<code>FALTAN-TICKETS.json</code>, en iCloud Drive ▸ 07_GASTOS). Luego haz la foto o sube los PDF: se leen con el mismo lector y se tachan solos contra la lista. Nada se envía.</div>
+      <div class="barra">
+        <label class="btn">Abrir lista<input type="file" id="fFaltanLista" accept=".json,application/json" hidden></label>
+        <span id="faltanNombre" class="ayuda"></span>
+      </div>
+      <div id="faltanEstadoLista"></div>
+    </div>
+    <div id="faltanVacio" class="vacio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7H4V5h11"/></svg>
+      Abre la lista para ver los movimientos que aún no tienen ticket.
+    </div>
+    <div id="faltanPanel" hidden>
+      <div class="barra">
+        <input type="text" id="faltanBuscar" placeholder="Buscar por comercio o importe" style="flex:1 1 220px;min-width:0" aria-label="Buscar">
+        <label class="check"><input type="checkbox" id="faltanSoloNoEnv"> Solo no enviados</label>
+      </div>
+      <div id="faltanContador" class="ayuda"></div>
+      <div class="progreso" id="progFaltan"><div class="barra-p"><div></div></div><div class="txt"></div></div>
+      <div id="faltanAvisos"></div>
+      <div id="faltanResultado"></div>
+      <div id="faltanLista"></div>
+      <div class="barra" style="margin-top:14px">
+        <button class="btn sec" id="btnFaltanGuardar" disabled>⬇ Guardar en iCloud los tickets casados</button>
+      </div>
+      <div class="ayuda">Guarda los tickets casados (con su nombre) y un <code>FALTAN-TICKETS-hecho.json</code>. Llévalos a iCloud Drive ▸ 07_GASTOS ▸ RECUPERADOS: en la siguiente pasada el PC los mete en el rendiconto de su mes.</div>
+    </div>
+  </section>
+
+  <button class="fab" id="fabFaltan" hidden aria-label="Añadir ticket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Ticket</button>
+  <label class="vh" id="lblFaltanTicket">Añadir ticket a la lista<input type="file" id="fFaltanTicket" accept="application/pdf,.pdf,image/*,.jpg,.jpeg,.png,.heic,.heif,.webp,.xml,text/xml,application/xml,.html,.htm,text/html,.txt,text/plain" multiple hidden></label>
+
   <!-- AJUSTES -->
   <section id="p6">
     <h2>Ajustes</h2>
@@ -385,6 +421,7 @@
   <button data-p="p1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7M9 7h4"/></svg>Desglose<span class="est" id="e1"></span></button>
   <button data-p="p3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1"/><path d="M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg>Casar<span class="est" id="e3"></span></button>
   <button data-p="p4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></svg>Enviar<span class="est" id="e4"></span></button>
+  <button data-p="p7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7H4V5h11"/></svg>Faltan<span class="est" id="e7"></span></button>
   <button data-p="p6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>Ajustes<span class="est" id="e6"></span></button>
 </nav>
 <div class="modal" id="modal"><button class="icono cerrar" id="cierraZoom" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><img id="modalImg" alt="Ticket ampliado"></div>
@@ -394,10 +431,11 @@
 <script src="lib/excel.js" defer></script>
 <script src="lib/registro.js" defer></script>
 <script src="lib/app.js" defer></script>
+<script src="lib/faltan.js" defer></script>
 <script>
   // Si falta la carpeta lib/ (por ejemplo, al abrir el HTML desde dentro del ZIP) la página se ve pero no hace nada: avisar.
   document.addEventListener('DOMContentLoaded', function () {
-    var faltan = [['motor.js', window.Motor], ['excel.js', window.Excel], ['registro.js', window.Registro], ['app.js', window.__app]].filter(function (x) { return !x[1]; });
+    var faltan = [['motor.js', window.Motor], ['excel.js', window.Excel], ['registro.js', window.Registro], ['app.js', window.__app], ['faltan.js', window.Faltan]].filter(function (x) { return !x[1]; });
     if (!faltan.length) return;
     var zip = /\.zip[\/\\]|\/Temp\d+_/i.test(decodeURIComponent(location.href));
     var d = document.createElement('div');

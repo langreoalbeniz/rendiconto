@@ -1,0 +1,115 @@
+{
+  "generado": "2026-01-01T00:00:00",
+  "entradas": [
+    {
+      "id": "2026-08-1",
+      "mes": "2026-08",
+      "n": 1,
+      "fecha": "2026-08-12",
+      "comercio": "AUTOPISTA EJEMPLO NORTE",
+      "importe": 4.1,
+      "codigo": "H10001",
+      "enviado": true,
+      "pista": "dato inventado"
+    },
+    {
+      "id": "2026-08-2",
+      "mes": "2026-08",
+      "n": 2,
+      "fecha": "2026-08-13",
+      "comercio": "HOTEL PRUEBA CENTRO OVIEDO",
+      "importe": 68.0,
+      "codigo": "H10002",
+      "enviado": false,
+      "pista": "dato inventado"
+    },
+    {
+      "id": "2026-08-3",
+      "mes": "2026-08",
+      "n": 3,
+      "fecha": "2026-08-14",
+      "comercio": "RESTAURANTE INVENTADO LEON",
+      "importe": 18.5,
+      "codigo": "H10003",
+      "enviado": false,
+      "pista": "dato inventado"
+    },
+    {
+      "id": "2026-08-4",
+      "mes": "2026-08",
+      "n": 4,
+      "fecha": "2026-08-15",
+      "comercio": "ESTACION DEMO SL BURGOS",
+      "importe": 61.27,
+      "codigo": "H10004",
+      "enviado": false,
+      "pista": "dato inventado"
+    },
+    {
+      "id": "2026-08-5",
+      "mes": "2026-08",
+      "n": 5,
+      "fecha": "2026-08-16",
+      "comercio": "PARKING FICTICIO VIGO",
+      "importe": 2.65,
+      "codigo": "H10005",
+      "enviado": false,
+      "pista": "dato inventado"
+    },
+    {
+      "id": "2026-09-6",
+      "mes": "2026-09",
+      "n": 6,
+      "fecha": "2026-09-03",
+      "comercio": "PARKING FICTICIO VIGO",
+      "importe": 2.65,
+      "codigo": "H10006",
+      "enviado": false,
+      "pista": "dato inventado"
+    },
+    {
+      "id": "2026-09-7",
+      "mes": "2026-09",
+      "n": 7,
+      "fecha": "2026-09-04",
+      "comercio": "MENSAJERIA DEMO MADRID",
+      "importe": 12.4,
+      "codigo": "H10007",
+      "enviado": false,
+      "pista": "dato inventado"
+    },
+    {
+      "id": "2026-09-8",
+      "mes": "2026-09",
+      "n": 8,
+      "fecha": "2026-09-05",
+      "comercio": "CAFETERIA EJEMPLO GIJON",
+      "importe": 7.3,
+      "codigo": "H10008",
+      "enviado": false,
+      "pista": "dato inventado"
+    },
+    {
+      "id": "2026-09-9",
+      "mes": "2026-09",
+      "n": 9,
+      "fecha": "2026-09-08",
+      "comercio": "AUTOPISTAS DE PRUEBA LEON",
+      "importe": 5.55,
+      "codigo": null,
+      "enviado": false,
+      "pista": "dato inventado"
+    },
+    {
+      "id": "2026-09-10",
+      "mes": "2026-09",
+      "n": 10,
+      "fecha": "2026-09-09",
+      "comercio": "COPISTERIA DEMO OVIEDO",
+      "importe": 3.2,
+      "codigo": "H10010",
+      "enviado": false,
+      "pista": "dato inventado"
+    }
+  ]
+}
