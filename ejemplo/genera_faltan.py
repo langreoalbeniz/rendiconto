@@ -34,7 +34,7 @@ def main():
     entradas = []
     for n, codigo, comercio, importe, enviado in MOVS:
         mes, dd = MESES[n]
-        entradas.append({
+        e = {
             'id': '%s-%d' % (mes, n),
             'mes': mes,
             'n': n,
@@ -44,8 +44,25 @@ def main():
             'codigo': codigo,
             'enviado': enviado,
             'pista': 'dato inventado',
-        })
-    doc = {'generado': '2026-01-01T00:00:00', 'entradas': entradas}
+        }
+        # mov 2: el PC ya le propuso un ticket (estado «propuesto»); mov 4: ya está recuperado (estado «recuperado»)
+        if n == 2:
+            e['propuesto'] = {'archivo': '2026-08_mov2_13-08-2026_68,00.pdf', 'origen': 'escaneo-ejemplo.pdf',
+                              'pagina': 1, 'via': 'importe 68,00 €', 'instruccion': 165, 'estado': 'propuesto',
+                              'fuente': 'escaneo de ejemplo'}
+        if n == 4:
+            e['recuperado'] = '2026-08_mov4_15-08-2026_61,27.pdf'
+        entradas.append(e)
+    # «a elegir»: un ticket escaneado de ejemplo que cuadra con dos movimientos (mov 3 y mov 10): el titular elige
+    a_elegir = [{
+        'key': 'ae-ejemplo-1', 'origen': 'escaneo-ejemplo.pdf', 'pagina': 2, 'via': 'importe',
+        'leido': {'importe': 18.50, 'codigo': None, 'fecha': None},
+        'opciones': [
+            {'id': '2026-08-3', 'mes': '2026-08', 'n': 3, 'importe': 18.50, 'comercio': 'RESTAURANTE INVENTADO LEON', 'fecha': '2026-08-14', 'codigo': 'H10003'},
+            {'id': '2026-09-10', 'mes': '2026-09', 'n': 10, 'importe': 3.20, 'comercio': 'COPISTERIA DEMO OVIEDO', 'fecha': '2026-09-09', 'codigo': 'H10010'},
+        ],
+    }]
+    doc = {'generado': '2026-01-01T00:00:00', 'entradas': entradas, 'a_elegir': a_elegir}
     with open(OUT, 'w', encoding='utf-8') as f:
         json.dump(doc, f, ensure_ascii=False, indent=2)
         f.write('\n')

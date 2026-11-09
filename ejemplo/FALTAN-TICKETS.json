@@ -21,7 +21,16 @@
       "importe": 68.0,
       "codigo": "H10002",
       "enviado": false,
-      "pista": "dato inventado"
+      "pista": "dato inventado",
+      "propuesto": {
+        "archivo": "2026-08_mov2_13-08-2026_68,00.pdf",
+        "origen": "escaneo-ejemplo.pdf",
+        "pagina": 1,
+        "via": "importe 68,00 €",
+        "instruccion": 165,
+        "estado": "propuesto",
+        "fuente": "escaneo de ejemplo"
+      }
     },
     {
       "id": "2026-08-3",
@@ -43,7 +52,8 @@
       "importe": 61.27,
       "codigo": "H10004",
       "enviado": false,
-      "pista": "dato inventado"
+      "pista": "dato inventado",
+      "recuperado": "2026-08_mov4_15-08-2026_61,27.pdf"
     },
     {
       "id": "2026-08-5",
@@ -110,6 +120,39 @@
       "codigo": "H10010",
       "enviado": false,
       "pista": "dato inventado"
+    }
+  ],
+  "a_elegir": [
+    {
+      "key": "ae-ejemplo-1",
+      "origen": "escaneo-ejemplo.pdf",
+      "pagina": 2,
+      "via": "importe",
+      "leido": {
+        "importe": 18.5,
+        "codigo": null,
+        "fecha": null
+      },
+      "opciones": [
+        {
+          "id": "2026-08-3",
+          "mes": "2026-08",
+          "n": 3,
+          "importe": 18.5,
+          "comercio": "RESTAURANTE INVENTADO LEON",
+          "fecha": "2026-08-14",
+          "codigo": "H10003"
+        },
+        {
+          "id": "2026-09-10",
+          "mes": "2026-09",
+          "n": 10,
+          "importe": 3.2,
+          "comercio": "COPISTERIA DEMO OVIEDO",
+          "fecha": "2026-09-09",
+          "codigo": "H10010"
+        }
+      ]
     }
   ]
 }
