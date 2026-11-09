@@ -153,6 +153,11 @@
   .tostada { position:fixed; left:50%; transform:translateX(-50%); bottom:calc(84px + var(--inf-ins)); z-index:50; display:flex; align-items:center; gap:12px;
     background:var(--texto); color:var(--fondo); border-radius:14px; padding:10px 12px 10px 16px; font-size:15px; box-shadow:var(--sombra); max-width:calc(100% - 32px); }
   .tostada[hidden] { display:none; }
+  /* franja de «hay una versión nueva» */
+  .franja-act { position:sticky; top:0; z-index:40; display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    background:var(--acento); color:var(--acento-txt); padding:calc(8px + var(--sup-ins)) 16px 8px; font-size:15px; }
+  .franja-act[hidden] { display:none; }
+  .franja-act .btn { background:var(--acento-txt); color:var(--acento); border:0; }
   #veloBorrar { z-index:60; } /* por encima de la hoja de detalle (45) */
   .hoja-menu { width:100%; max-width:520px; background:var(--sup); border-radius:20px 20px 0 0; padding:16px 16px calc(16px + var(--inf-ins)); display:grid; gap:10px; }
   .hoja-menu .btn { min-height:56px; font-size:17px; }
@@ -216,6 +221,10 @@
 </style>
 </head>
 <body>
+<div id="barraActualizar" class="franja-act" hidden role="status" aria-live="polite">
+  <span style="flex:1 1 auto">Hay una versión nueva de la app.</span>
+  <button class="btn peq" id="btnActualizar">Actualizar</button>
+</div>
 <header class="barra-sup">
   <div class="marca">
     <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="6" width="44" height="52" rx="8" fill="currentColor" opacity=".12"/><path d="M14 10a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v44l-6-4-6 4-6-4-6 4-6-4-6 4z" fill="none" stroke="#2f55d4" stroke-width="4" stroke-linejoin="round"/><path d="M22 30l7 7 13-14" fill="none" stroke="#1b7339" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -398,6 +407,10 @@
         <li>Pulsa <b>Compartir</b> (el cuadrado con la flecha hacia arriba).</li>
         <li>Elige <b>Añadir a pantalla de inicio</b>. Aparecerá «Rendiconto» como una app más y funciona sin conexión.</li>
       </ol>
+    </div>
+    <div class="caja">
+      <b>Versión</b>
+      <div class="ayuda" id="versionApp">—</div>
     </div>
   </section>
 </main>
