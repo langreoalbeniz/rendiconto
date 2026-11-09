@@ -332,8 +332,11 @@
       <div class="ayuda">Abre la lista que prepara el PC (<code>FALTAN-TICKETS.json</code>, en iCloud Drive ▸ 07_GASTOS). Luego haz la foto o sube los PDF: se leen con el mismo lector y se tachan solos contra la lista. Nada se envía.</div>
       <div class="barra">
         <label class="btn">Abrir lista<input type="file" id="fFaltanLista" accept=".json,application/json" hidden></label>
+        <label class="btn sec">Abrir propuestos (ver el ticket)<input type="file" id="fFaltanPropuestos" accept=".zip,application/zip" hidden></label>
         <span id="faltanNombre" class="ayuda"></span>
       </div>
+      <div class="ayuda">Con <b>Abrir lista</b> ves los movimientos; con <b>Abrir propuestos</b> cargas el paquete que prepara el PC (<code>PROPUESTOS-REVISAR.zip</code>, en iCloud Drive ▸ 07_GASTOS ▸ RECUPERADOS) para <b>ver el PDF</b> de cada ticket propuesto antes de confirmarlo.</div>
+      <div id="faltanPropuestosEstado"></div>
       <div id="faltanEstadoLista"></div>
     </div>
     <div id="faltanVacio" class="vacio">
