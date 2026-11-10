@@ -5,18 +5,18 @@
    ('rendiconto-AAAAMMDD-xxxxxxxx'). Así, cuando cambia aunque sea un byte del código, el nombre cambia, el iPhone
    instala un service worker nuevo y deja de servir para siempre la versión vieja de su caché. */
 'use strict';
-const CACHE = 'rendiconto-20261109-b5cb8107'; // preparar.py lo reescribe con 'rendiconto-<fecha>-<hash del contenido>' al publicar
+const CACHE = 'rendiconto-20261110-903c6608'; // preparar.py lo reescribe con 'rendiconto-<fecha>-<hash del contenido>' al publicar
 const APP = [
   './', 'index.html', 'manifest.webmanifest', 'sw.js',
   'iconos/icono.svg', 'iconos/icono-180.png', 'iconos/icono-192.png', 'iconos/icono-512.png',
-  'lib/app.js', 'lib/motor.js', 'lib/faltan.js', 'lib/excel.js', 'lib/registro.js',
+  'lib/app.js', 'lib/motor.js', 'lib/faltan.js', 'lib/meses.js', 'lib/excel.js', 'lib/registro.js',
   'lib/jszip.min.js', 'lib/pdf.min.js', 'lib/pdf.worker.min.js', 'lib/pdf-lib.min.js',
 ];
 // el OCR (lib/ocr-*.js, unos 7 MB) no se guarda al instalar: se guarda la primera vez que se usa (ver «fetch»)
 
 // Red primero para el código: así el móvil siempre coge la última versión si hay conexión y no se queda con una vieja.
 // Caché primero solo para lo pesado que no cambia (OCR, pdf.js, pdf-lib, JSZip, iconos).
-const CODIGO = /(^|\/)(index\.html|sw\.js|manifest\.webmanifest|lib\/(app|motor|faltan|excel|registro)\.js)$/;
+const CODIGO = /(^|\/)(index\.html|sw\.js|manifest\.webmanifest|lib\/(app|motor|faltan|meses|excel|registro)\.js)$/;
 
 self.addEventListener('install', function (e) {
   // guarda la app, pero NO toma el control solo: espera a que el usuario pulse «Actualizar» (o a que no queden pestañas)

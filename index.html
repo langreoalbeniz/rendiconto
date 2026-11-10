@@ -196,6 +196,23 @@
   .opcion img { max-width:320px; max-height:260px; border:1px solid var(--borde); border-radius:8px; background:#fff; cursor:zoom-in; }
   .pasos-instalar { margin:6px 0 0; padding-left:22px; }
   .pasos-instalar li { margin:4px 0; }
+  /* pestaña «Meses» (169) */
+  #p8 { padding-bottom:84px; }
+  .mes-tarjeta { display:block; width:100%; text-align:left; background:var(--sup); color:var(--texto); border:1px solid var(--borde); border-radius:var(--radio); padding:14px; margin:0 0 12px; box-shadow:var(--sombra); font:inherit; cursor:pointer; }
+  .mes-tarjeta:active { transform:scale(.995); }
+  .mes-cab { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:18px; }
+  .mes-tarjeta .barra-p { height:10px; background:var(--sup2); border-radius:5px; overflow:hidden; }
+  .mes-tarjeta .barra-p div { height:100%; background:var(--ok); }
+  .mes-barra { position:sticky; top:0; z-index:5; display:flex; align-items:center; gap:10px; background:var(--fondo); padding:6px 0 10px; }
+  .mov-card { display:flex; gap:12px; align-items:flex-start; background:var(--sup); border:1px solid var(--borde); border-left:5px solid var(--borde); border-radius:var(--radio); padding:12px; margin:0 0 10px; box-shadow:var(--sombra); }
+  .mov-card.ok { border-left-color:var(--ok); } .mov-card.aviso { border-left-color:var(--aviso); } .mov-card.mal { border-left-color:var(--mal); }
+  .mov-txt { flex:1; min-width:0; }
+  .mov-cab { display:flex; gap:8px; align-items:baseline; flex-wrap:wrap; font-size:16px; }
+  .mov-acc { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  .mov-comida { margin:6px 0; }
+  .mov-mini { flex:none; width:84px; min-height:64px; display:flex; align-items:center; justify-content:center; }
+  .mov-mini .mini-el { max-width:84px; max-height:110px; border-radius:8px; }
+  @media (max-width:700px) { .mov-mini { width:72px; } .mov-mini .mini-el { max-width:72px; } }
   /* móvil: textos de 15 px como mínimo y objetivos de 48 px */
   @media (max-width:700px) {
     body { font-size:16px; }
@@ -237,8 +254,35 @@
 </header>
 
 <main>
-  <!-- BANDEJA (inicio) -->
-  <section id="p5" class="activo">
+  <!-- MESES (inicio · «un solo archivo»): cada mes como un rendiconto ya hecho, con el ticket al lado -->
+  <section id="p8" class="activo">
+    <h2>Meses</h2>
+    <div id="mesesInicio">
+      <div class="caja">
+        <b>Carga tus rendicontos</b>
+        <div class="ayuda">Un solo archivo: el paquete que prepara el PC (<code>RENDICONTO-TODO.zip</code>). Verás cada mes ya casado, con la miniatura del ticket al lado, y solo tendrás que aportar lo que falte.</div>
+        <div class="barra" style="margin-top:10px">
+          <label class="btn grande" style="max-width:420px"><span id="btnCargarMeses">Cargar mis rendicontos</span><input type="file" id="fMesesZip" accept=".zip,application/zip" hidden></label>
+        </div>
+        <div class="ayuda">En el iPhone: <b>Archivos ▸ iCloud Drive ▸ 07_GASTOS</b> ▸ <code>RENDICONTO-TODO.zip</code>.</div>
+        <div id="mesesEstado"></div>
+      </div>
+    </div>
+    <div id="mesesVacio" class="vacio" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
+      Carga el paquete para ver tus meses.
+    </div>
+    <div id="mesesLista" hidden></div>
+    <div id="mesPantalla" hidden></div>
+    <div id="mesAvisos" style="margin:10px 0"></div>
+    <div class="barra" style="margin-top:14px">
+      <button class="btn" id="btnEnviarPC" disabled>📤 Enviar al PC</button>
+    </div>
+    <div class="ayuda">Al pulsar <b>Enviar al PC</b> se crea <code>CAMBIOS-&lt;fecha&gt;.zip</code> (tus confirmaciones, las fotos nuevas y las comidas/cenas). Guárdalo en <b>iCloud Drive ▸ 07_GASTOS ▸ RECUPERADOS</b>: en la siguiente pasada el PC lo aplica y te deja el paquete actualizado. Nada se envía a nadie.</div>
+  </section>
+
+  <!-- BANDEJA -->
+  <section id="p5">
     <h2>Bandeja</h2>
     <div class="progreso" id="prog2"><div class="barra-p"><div></div></div><div class="txt"></div></div>
     <div id="avisosCarga"></div>
@@ -420,7 +464,7 @@
   </section>
 </main>
 
-<button class="fab" id="fab" aria-label="Añadir ticket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Ticket</button>
+<button class="fab" id="fab" hidden aria-label="Añadir ticket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Ticket</button>
 <div class="velo" id="menuFab" hidden>
   <div class="hoja-menu" role="dialog" aria-label="Añadir ticket">
     <label class="btn grande">📷 Hacer foto<input type="file" id="fFoto" accept="image/*" capture="environment" hidden></label>
@@ -435,7 +479,8 @@
 </div>
 
 <nav id="nav" aria-label="Secciones">
-  <button data-p="p5" class="activo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></svg>Bandeja<span class="est" id="e5"></span></button>
+  <button data-p="p8" class="activo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Meses<span class="est" id="e8"></span></button>
+  <button data-p="p5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></svg>Bandeja<span class="est" id="e5"></span></button>
   <button data-p="p1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7M9 7h4"/></svg>Desglose<span class="est" id="e1"></span></button>
   <button data-p="p3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1"/><path d="M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg>Casar<span class="est" id="e3"></span></button>
   <button data-p="p4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></svg>Enviar<span class="est" id="e4"></span></button>
@@ -450,10 +495,11 @@
 <script src="lib/registro.js" defer></script>
 <script src="lib/app.js" defer></script>
 <script src="lib/faltan.js" defer></script>
+<script src="lib/meses.js" defer></script>
 <script>
   // Si falta la carpeta lib/ (por ejemplo, al abrir el HTML desde dentro del ZIP) la página se ve pero no hace nada: avisar.
   document.addEventListener('DOMContentLoaded', function () {
-    var faltan = [['motor.js', window.Motor], ['excel.js', window.Excel], ['registro.js', window.Registro], ['app.js', window.__app], ['faltan.js', window.Faltan]].filter(function (x) { return !x[1]; });
+    var faltan = [['motor.js', window.Motor], ['excel.js', window.Excel], ['registro.js', window.Registro], ['app.js', window.__app], ['faltan.js', window.Faltan], ['meses.js', window.Meses]].filter(function (x) { return !x[1]; });
     if (!faltan.length) return;
     var zip = /\.zip[\/\\]|\/Temp\d+_/i.test(decodeURIComponent(location.href));
     var d = document.createElement('div');
