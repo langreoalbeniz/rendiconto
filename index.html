@@ -58,6 +58,23 @@
   #nav button.activo { color:var(--acento); background:var(--acento-suave); }
   #nav .est { position:absolute; top:2px; left:calc(50% + 6px); }
   #nav .est .pill { font-size:12px; padding:0 6px; min-width:18px; line-height:18px; }
+  /* barra de 3 pestañas (170): Meses · Ticket · Más; la del centro va destacada */
+  #nav button { max-width:none; }
+  #nav button.nav-centro { color:var(--acento-txt); background:var(--acento); margin:2px 4px; font-weight:700; }
+  #nav button.nav-centro.activo { color:var(--acento-txt); background:var(--acento); }
+  #nav button.nav-centro svg { width:26px; height:26px; }
+  /* «Volver a Más» (encima de las pantallas que viven dentro de «Más») */
+  #volverBar { margin:0 0 6px; }
+  #volverBar[hidden] { display:none; }
+  /* rejilla de «Más» */
+  .mas-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:12px; margin-top:8px; }
+  @media (min-width:700px) { .mas-grid { grid-template-columns:repeat(3, 1fr); } }
+  .mas-item { position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; min-height:104px;
+    background:var(--sup); color:var(--texto); border:1px solid var(--borde); border-radius:var(--radio); box-shadow:var(--sombra);
+    font:inherit; font-weight:600; font-size:16px; cursor:pointer; }
+  .mas-item:active { transform:scale(.99); }
+  .mas-item svg { width:30px; height:30px; color:var(--acento); }
+  .mas-item .est { position:absolute; top:8px; right:10px; }
   main { padding:12px 16px; max-width:1200px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left)); padding-right:max(16px, env(safe-area-inset-right)); }
   section { display:none; } section.activo { display:block; animation:entra .18s ease-out; }
   #p5, #p7 { padding-bottom:84px; } /* que el botón «+ Ticket» no tape la última ficha */
@@ -210,9 +227,12 @@
   .mov-cab { display:flex; gap:8px; align-items:baseline; flex-wrap:wrap; font-size:16px; }
   .mov-acc { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
   .mov-comida { margin:6px 0; }
-  .mov-mini { flex:none; width:84px; min-height:64px; display:flex; align-items:center; justify-content:center; }
-  .mov-mini .mini-el { max-width:84px; max-height:110px; border-radius:8px; }
-  @media (max-width:700px) { .mov-mini { width:72px; } .mov-mini .mini-el { max-width:72px; } }
+  /* miniatura legible de 96×128 (170); se toca para verla a pantalla completa */
+  .mov-mini { flex:none; width:96px; min-height:96px; display:flex; align-items:center; justify-content:center; }
+  .mov-mini[role=button] { cursor:zoom-in; }
+  .mov-mini .mini-el { max-width:96px; max-height:128px; border-radius:8px; border:1px solid var(--borde); background:#fff; box-shadow:0 1px 3px rgba(16,24,40,.12); image-rendering:auto; }
+  .mov-visor-acc { position:sticky; bottom:0; display:flex; gap:10px; justify-content:center; background:var(--fondo); padding:12px 0 calc(8px + var(--inf-ins)); border-top:1px solid var(--borde); }
+  .mov-visor-acc .btn { min-height:52px; flex:1 1 0; max-width:220px; }
   /* móvil: textos de 15 px como mínimo y objetivos de 48 px */
   @media (max-width:700px) {
     body { font-size:16px; }
@@ -254,17 +274,18 @@
 </header>
 
 <main>
+  <div id="volverBar" hidden><button class="btn sec peq" id="volverMas"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><path d="M15 5l-7 7 7 7"/></svg> Más</button></div>
   <!-- MESES (inicio · «un solo archivo»): cada mes como un rendiconto ya hecho, con el ticket al lado -->
   <section id="p8" class="activo">
     <h2>Meses</h2>
     <div id="mesesInicio">
       <div class="caja">
         <b>Carga tus rendicontos</b>
-        <div class="ayuda">Un solo archivo: el paquete que prepara el PC (<code>RENDICONTO-TODO.zip</code>). Verás cada mes ya casado, con la miniatura del ticket al lado, y solo tendrás que aportar lo que falte.</div>
+        <div class="ayuda">El archivo que prepara el PC (<code>RENDICONTO-TODO</code>, en <b>07_GASTOS</b>). Verás cada mes ya casado, con la miniatura del ticket al lado, y solo tendrás que aportar lo que falte.</div>
         <div class="barra" style="margin-top:10px">
-          <label class="btn grande" style="max-width:420px"><span id="btnCargarMeses">Cargar mis rendicontos</span><input type="file" id="fMesesZip" accept=".zip,application/zip" hidden></label>
+          <label class="btn grande" style="max-width:420px"><span id="btnCargarMeses">Cargar mis rendicontos (archivo RENDICONTO-TODO de 07_GASTOS)</span><input type="file" id="fMesesZip" accept=".zip,application/zip" hidden></label>
         </div>
-        <div class="ayuda">En el iPhone: <b>Archivos ▸ iCloud Drive ▸ 07_GASTOS</b> ▸ <code>RENDICONTO-TODO.zip</code>.</div>
+        <div class="ayuda">En el iPhone: <b>Archivos ▸ iCloud Drive ▸ 07_GASTOS</b> ▸ <code>RENDICONTO-TODO</code>.</div>
         <div id="mesesEstado"></div>
       </div>
     </div>
@@ -278,7 +299,7 @@
     <div class="barra" style="margin-top:14px">
       <button class="btn" id="btnEnviarPC" disabled>📤 Enviar al PC</button>
     </div>
-    <div class="ayuda">Al pulsar <b>Enviar al PC</b> se crea <code>CAMBIOS-&lt;fecha&gt;.zip</code> (tus confirmaciones, las fotos nuevas y las comidas/cenas). Guárdalo en <b>iCloud Drive ▸ 07_GASTOS ▸ RECUPERADOS</b>: en la siguiente pasada el PC lo aplica y te deja el paquete actualizado. Nada se envía a nadie.</div>
+    <div class="ayuda">Al pulsar <b>Enviar al PC</b> se guarda un archivo con tus confirmaciones, las fotos nuevas y las comidas/cenas. Guarda el archivo en <b>iCloud ▸ 07_GASTOS ▸ RECUPERADOS</b>. El PC lo recoge solo y te deja los meses actualizados. Nada se envía a nadie.</div>
   </section>
 
   <!-- BANDEJA -->
@@ -462,6 +483,20 @@
       <div class="ayuda" id="versionApp">—</div>
     </div>
   </section>
+
+  <!-- MÁS: menú con el resto de pantallas (barra inferior de solo 3: Meses · Ticket · Más) -->
+  <section id="pmas">
+    <h2>Más</h2>
+    <div class="ayuda">El trabajo de cada día está en <b>Meses</b> y en <b>Ticket</b>. Aquí tienes el resto cuando lo necesites.</div>
+    <div class="mas-grid">
+      <button class="mas-item" data-ir="p5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></svg><span class="mi-txt">Bandeja</span><span class="est" id="e5"></span></button>
+      <button class="mas-item" data-ir="p1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7M9 7h4"/></svg><span class="mi-txt">Desglose</span><span class="est" id="e1"></span></button>
+      <button class="mas-item" data-ir="p3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1"/><path d="M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg><span class="mi-txt">Casar</span><span class="est" id="e3"></span></button>
+      <button class="mas-item" data-ir="p4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></svg><span class="mi-txt">Enviar</span><span class="est" id="e4"></span></button>
+      <button class="mas-item" data-ir="p7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7H4V5h11"/></svg><span class="mi-txt">Faltan</span><span class="est" id="e7"></span></button>
+      <button class="mas-item" data-ir="p6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg><span class="mi-txt">Ajustes</span><span class="est" id="e6"></span></button>
+    </div>
+  </section>
 </main>
 
 <button class="fab" id="fab" hidden aria-label="Añadir ticket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Ticket</button>
@@ -478,14 +513,11 @@
   <div id="hojaCuerpo"></div>
 </div>
 
+<label class="vh" id="lblTicketHoy">Ticket de hoy (hacer foto)<input type="file" id="fTicketHoy" accept="image/*" capture="environment" hidden></label>
 <nav id="nav" aria-label="Secciones">
   <button data-p="p8" class="activo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Meses<span class="est" id="e8"></span></button>
-  <button data-p="p5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></svg>Bandeja<span class="est" id="e5"></span></button>
-  <button data-p="p1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7M9 7h4"/></svg>Desglose<span class="est" id="e1"></span></button>
-  <button data-p="p3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1"/><path d="M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg>Casar<span class="est" id="e3"></span></button>
-  <button data-p="p4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></svg>Enviar<span class="est" id="e4"></span></button>
-  <button data-p="p7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7H4V5h11"/></svg>Faltan<span class="est" id="e7"></span></button>
-  <button data-p="p6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>Ajustes<span class="est" id="e6"></span></button>
+  <button id="navTicket" class="nav-centro" aria-label="Ticket de hoy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Ticket</button>
+  <button data-p="pmas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>Más<span class="est" id="eMas"></span></button>
 </nav>
 <div class="modal" id="modal"><button class="icono cerrar" id="cierraZoom" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><img id="modalImg" alt="Ticket ampliado"></div>
 
