@@ -178,6 +178,10 @@
   #veloBorrar { z-index:60; } /* por encima de la hoja de detalle (45) */
   .hoja-menu { width:100%; max-width:520px; background:var(--sup); border-radius:20px 20px 0 0; padding:16px 16px calc(16px + var(--inf-ins)); display:grid; gap:10px; }
   .hoja-menu .btn { min-height:56px; font-size:17px; }
+  .cat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .cat-grid .btn { min-height:60px; font-size:17px; }
+  .cat-grid .btn.sug { outline:3px solid var(--acento); outline-offset:-3px; }
+  .cat-recientes { display:flex; flex-wrap:wrap; gap:8px; }
   /* hoja de detalle de un ticket */
   .hoja { position:fixed; inset:0; z-index:45; background:var(--fondo); overflow:auto; padding:calc(8px + var(--sup-ins)) max(12px, env(safe-area-inset-right)) calc(24px + var(--inf-ins)) max(12px, env(safe-area-inset-left)); }
   .hoja[hidden] { display:none; }
@@ -316,7 +320,8 @@
     <div class="ayuda" id="ayudaTickets" style="display:none">Toca un ticket para verlo entero, corregir el importe o girarlo.</div>
     <div class="fichas" id="listaTickets"></div>
     <div id="enviadasCarga"></div>
-    <h3>Pendientes de otros días</h3>
+    <h3>Pendientes del mes</h3>
+    <div class="ayuda">Los tickets que subes quedan a la espera del desglose que manda la sede por correo. Cuando llegue, se casan solos.</div>
     <div id="bandejaPend"></div>
     <div id="bandejaEnv" style="margin-top:8px"></div>
     <div class="barra"><button class="btn sec" id="btnDeshacer">↶ Deshacer último marcado</button></div>
@@ -506,6 +511,35 @@
     <label class="btn grande sec">📎 Añadir archivos<input type="file" id="fTickets" accept="application/pdf,.pdf,image/*,.jpg,.jpeg,.png,.heic,.heif,.webp,.xml,text/xml,application/xml,.html,.htm,text/html,.txt,text/plain" multiple hidden></label>
     <div class="ayuda">Fotos del carrete o de iCloud Drive, PDF (también escaneados con varios tickets por página), facturas XML, HTML o TXT. Cada archivo es un ticket entero: no se recorta nada.</div>
     <button class="btn sec" id="cierraFab">Cancelar</button>
+  </div>
+</div>
+<!-- 172: hoja de categoría al subir un ticket -->
+<div class="velo" id="veloCat" hidden>
+  <div class="hoja-menu" role="dialog" aria-label="¿Qué gasto es?">
+    <b id="catTitulo">¿Qué gasto es este ticket?</b>
+    <div class="ayuda" id="catNombre"></div>
+    <div class="cat-grid" id="catGrid">
+      <button class="btn sec" data-cat="COMBUSTIBLE">⛽ Gasolina</button>
+      <button class="btn sec" data-cat="COMIDA">🍽 Comida</button>
+      <button class="btn sec" data-cat="CENA">🌙 Cena</button>
+      <button class="btn sec" data-cat="HOTEL">🏨 Hotel</button>
+      <button class="btn sec" data-cat="PARKING">🅿️ Parking</button>
+      <button class="btn sec" data-cat="PEAJE">🛣 Peaje</button>
+      <button class="btn sec" data-cat="VARIOS">📦 Varios</button>
+    </div>
+    <div id="catQuien" hidden>
+      <b id="catQuienT">¿Comida solo o con quién?</b>
+      <div class="cat-grid" style="margin-top:8px">
+        <button class="btn" data-quien="solo">Solo</button>
+        <button class="btn sec" id="catQuienCon">Con…</button>
+      </div>
+      <div id="catQuienCampo" hidden style="margin-top:8px">
+        <input type="text" id="catQuienInput" placeholder="con quién (p. ej. ALDO / CLIENTE X)" style="width:100%">
+        <div class="cat-recientes" id="catRecientes" style="margin:8px 0"></div>
+        <button class="btn grande" id="catQuienOk">Guardar</button>
+      </div>
+    </div>
+    <button class="btn sec" id="catLuego">Luego (lo elijo después)</button>
   </div>
 </div>
 <div class="hoja" id="hoja" hidden role="dialog" aria-label="Ticket">
