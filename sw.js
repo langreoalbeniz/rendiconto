@@ -5,7 +5,7 @@
    ('rendiconto-AAAAMMDD-xxxxxxxx'). Así, cuando cambia aunque sea un byte del código, el nombre cambia, el iPhone
    instala un service worker nuevo y deja de servir para siempre la versión vieja de su caché. */
 'use strict';
-const CACHE = 'rendiconto-20261111-8c252b64'; // preparar.py lo reescribe con 'rendiconto-<fecha>-<hash del contenido>' al publicar
+const CACHE = 'rendiconto-20261111-fccc58ea'; // preparar.py lo reescribe con 'rendiconto-<fecha>-<hash del contenido>' al publicar
 const APP = [
   './', 'index.html', 'manifest.webmanifest', 'sw.js',
   'iconos/icono.svg', 'iconos/icono-180.png', 'iconos/icono-192.png', 'iconos/icono-512.png',
