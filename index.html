@@ -181,6 +181,7 @@
   .cat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   .cat-grid .btn { min-height:60px; font-size:17px; }
   .cat-grid .btn.sug { outline:3px solid var(--acento); outline-offset:-3px; }
+  #catTodos.on { outline:3px solid var(--acento); outline-offset:-3px; font-weight:700; }
   .cat-recientes { display:flex; flex-wrap:wrap; gap:8px; }
   /* hoja de detalle de un ticket */
   .hoja { position:fixed; inset:0; z-index:45; background:var(--fondo); overflow:auto; padding:calc(8px + var(--sup-ins)) max(12px, env(safe-area-inset-right)) calc(24px + var(--inf-ins)) max(12px, env(safe-area-inset-left)); }
@@ -517,6 +518,7 @@
 <div class="velo" id="veloCat" hidden>
   <div class="hoja-menu" role="dialog" aria-label="¿Qué gasto es?">
     <b id="catTitulo">¿Qué gasto es este ticket?</b>
+    <img id="catMini" alt="Ticket" hidden style="display:block;max-height:140px;max-width:100%;margin:6px auto 2px;border-radius:8px;object-fit:contain">
     <div class="ayuda" id="catNombre"></div>
     <div class="cat-grid" id="catGrid">
       <button class="btn sec" data-cat="COMBUSTIBLE">⛽ Gasolina</button>
@@ -539,6 +541,7 @@
         <button class="btn grande" id="catQuienOk">Guardar</button>
       </div>
     </div>
+    <button class="btn sec" id="catTodos" hidden>La misma para todos</button>
     <button class="btn sec" id="catLuego">Luego (lo elijo después)</button>
   </div>
 </div>
